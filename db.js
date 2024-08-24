@@ -7,9 +7,9 @@ const dbName='iNotebook1'
 async function connectToMongo() {
     try {
         await mongoose.connect(url, {
-            dbName,
-            useNewUrlParser: true,
-            useUnifiedTopology: true
+            dbName
+            // useNewUrlParser: true,
+            // useUnifiedTopology: true
         });
         console.log('Connected to MongoDB');
     } catch (err) {

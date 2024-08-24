@@ -8,9 +8,10 @@ const bcrypt = require('bcrypt');
 // giving token using: npm i jsonwebtoken
 // jwt: jsonwebtoken : a way to verify a user
 var jwt = require('jsonwebtoken');
+// 
+const fetchuser = require('../middleware/fetchuser'); 
 
-
-
+// route #1
 router.post('/createuser', [
     body('email').isEmail().withMessage('Invalid email address'),
     body('name').isLength({ min: 5 }).withMessage('Name must be at least 5 characters long'),
@@ -45,7 +46,8 @@ router.post('/createuser', [
         res.status(500).send({ error: 'Some Error Occured' });
     }
 });
-// authenticate a user: /api/auth/login
+// authenticate a user(already present): /api/auth/login   
+// ROUTE#2
 router.post('/login', [
     body('email').isEmail().withMessage('Invalid email address'),
     // body('name').isLength({ min: 5 }).withMessage('Name must be at least 5 characters long'),
@@ -86,6 +88,16 @@ router.post('/login', [
         return res.status(500).send({ error: 'Internal Server Error' });
     }
 })
-
+// Route#3 Get loggedin user Detail ./api/auth/getuser (login required)
+router.post('/getuser',fetchuser, async (req, res) => {
+try {
+    const userId=req.user.id;
+    const user = await User.findById(userId).select('-password');
+    res.send(user);
+} catch (error) {
+    console.log(error);
+        return res.status(500).send({ error: 'Internal Server Error' }); 
+}
+})
 
 module.exports = router;
