@@ -4,7 +4,7 @@ const express = require('express');
 const connectToMongo = require('./db'); // Adjust if necessary
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 async function startServer() {
     try {
