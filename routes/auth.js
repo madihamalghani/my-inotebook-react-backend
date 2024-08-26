@@ -37,7 +37,7 @@ router.post('/createuser', [
                 id: user.id
             }
         }
-        const jwt_secret = 'hdshvc';//this is sensitive data save it in private environment
+        const jwt_secret = 'hd';//this is sensitive data save it in private environment
         const authToken = jwt.sign(data, jwt_secret);
         res.json({ authToken })
         // res.json(user);
