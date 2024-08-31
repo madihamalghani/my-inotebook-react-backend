@@ -1,11 +1,15 @@
 const express = require('express');
+var cors = require('cors')
+var app = express()
+
+
 
 // const connectToMongo = require('./backend/db');
 const connectToMongo = require('./db'); // Adjust if necessary
 
-const app = express();
 const port = 5000;
-
+app.use(cors());
+// app.use(express.json())
 async function startServer() {
     try {
         await connectToMongo();
@@ -22,7 +26,7 @@ async function startServer() {
 
 
         app.listen(port, () => {
-            console.log(`Example app listening at http://localhost:${port}`);
+            console.log(`iNotebook backend listening at http://localhost:${port}`);
         });
     } catch (err) {
         console.error('Error connecting to MongoDB', err);
