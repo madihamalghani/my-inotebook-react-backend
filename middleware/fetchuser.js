@@ -1,6 +1,6 @@
 // fetchuser.js
 var jwt = require('jsonwebtoken');
-const jwt_secret = 'hdshvc';
+const jwt_secret = 'hd';  //write a code for safety and pass it as a string
 
 const fetchuser=(req,res,next)=>{
     // Get the user from jwtToken and add id to required object
