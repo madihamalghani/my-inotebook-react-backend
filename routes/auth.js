@@ -18,9 +18,11 @@ router.post('/createuser', [
     body('password').isLength({ min: 5 }).withMessage('Password must be at least 5 characters long'),
 
 ], async (req, res) => {
+    let success=false;
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({success, errors: errors.array() });
     }
 
     try {
@@ -37,9 +39,10 @@ router.post('/createuser', [
                 id: user.id
             }
         }
-        const jwt_secret = 'hd';//this is sensitive data save it in private environment
+        const jwt_secret = 'hdshvc';//this is sensitive data save it in private environment
         const authToken = jwt.sign(data, jwt_secret);
-        res.json({ authToken })
+        let success=true;
+        res.json({success, authToken })
         // res.json(user);
     } catch (err) {
         console.log(err);
@@ -54,7 +57,7 @@ router.post('/login', [
     body('password').exists().withMessage('Password can not be blank'),
 
 ], async (req, res) => {
-
+    let success=false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -66,11 +69,13 @@ router.post('/login', [
         const jwt_secret = 'hdshvc';
         let user = await User.findOne({ email });
         if (!user) {
+            success=false;
             return res.status(400).json({ error: "plz try to login with correct credentials" })
         }
         const passwordCompare = await bcrypt.compare(password, user.password);
         if (!passwordCompare) {
-            return res.status(400).json({ error: "plz try to login with correct credentials" })
+        success=false;
+            return res.status(400).json({success, error: "plz try to login with correct credentials" })
 
         }
         // user's data:
@@ -80,8 +85,8 @@ router.post('/login', [
             }
         }
         const authToken = jwt.sign(data, jwt_secret);
-
-        res.json({ authToken })
+        success=true;
+        res.json({success, authToken })
 
     } catch (err) {
         console.log(err);

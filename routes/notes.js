@@ -72,6 +72,7 @@ router.put('/updatenote/:id', fetchuser, async (req, res) => {
     }
 });
 
+
 // Route #4 delete the existing note login=>required using delete  /api/notes/deletenote
 router.delete('/deletenote/:id', fetchuser, async (req, res) => {
     const { title, description, tag } = req.body;
@@ -86,7 +87,7 @@ router.delete('/deletenote/:id', fetchuser, async (req, res) => {
 // find note to be deleted and delete it 
         let note = await Notes.findById(req.params.id);
         if (!note) {
-            return res.status(404).send('Note not found');
+            return res.status(404).send('Note not found find');
         }
 
         // Check if the note belongs to the logged-in user

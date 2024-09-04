@@ -1,10 +1,12 @@
 // fetchuser.js
 var jwt = require('jsonwebtoken');
-const jwt_secret = 'hd';  //write a code for safety and pass it as a string
+const jwt_secret = 'hdshvc';  //write a code for safety and pass it as a string
 
 const fetchuser=(req,res,next)=>{
     // Get the user from jwtToken and add id to required object
     const token=req.header('auth-token');
+    // const token = req.header('auth-token')?.replace('Bearer ', '');
+
     if(!token){
         res.status(401).send({error:'plz authenticate using a valid number'})
     }
