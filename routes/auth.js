@@ -7,8 +7,10 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 // giving token using: npm i jsonwebtoken
 // jwt: jsonwebtoken : a way to verify a user
+// require('dotenv').config();
+// const jwt_secret = process.env.jwt_secret;
 var jwt = require('jsonwebtoken');
-// 
+ const jwt_secret ="hd";
 const fetchuser = require('../middleware/fetchuser'); 
 
 // route #1
@@ -39,8 +41,10 @@ router.post('/createuser', [
                 id: user.id
             }
         }
-        const jwt_secret = 'hdshvc';//this is sensitive data save it in private environment
+        // const jwt_secret = 'hdshvc';//this is sensitive data save it in private environment
+
         const authToken = jwt.sign(data, jwt_secret);
+
         let success=true;
         res.json({success, authToken })
         // res.json(user);
@@ -66,7 +70,9 @@ router.post('/login', [
     try {
         const { email, password } = req.body;
         // This should ideally be stored in environment variables
-        const jwt_secret = 'hdshvc';
+        const jwt_secret = 'hd';
+        // const jwt_secret = process.env.jwt_secret;
+
         let user = await User.findOne({ email });
         if (!user) {
             success=false;
